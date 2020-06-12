@@ -5,6 +5,10 @@
  */
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /**
  *
  * @author 20102
@@ -57,4 +61,21 @@ public class News {
         this.news_addedBy = news_addedBy;
     }
 
+    public boolean add(Connection con) {
+        try {
+            PreparedStatement ps = con.prepareStatement("insert into news values(?,?,?,?,?)");
+            ps.setInt(1, Integer.parseInt(DB.AutoIncrementCoulmn(con, "news", "news_id")));
+            ps.setString(2, news_tittle);
+            ps.setString(3, news_description);
+            ps.setString(4, news_date);
+            ps.setInt(5, news_addedBy);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }
