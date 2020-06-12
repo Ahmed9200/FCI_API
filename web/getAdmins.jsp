@@ -6,13 +6,12 @@
 <%
     Connection con = DB.setConnection();
     String output = "";
-    ArrayList<Admins> admins = DB.getFeedbacksData(con, "select * from admins");
+    ArrayList<Admins> admins = DB.getAdmins(con, "select * from admins");
     output += "{\"result\": [";
     for (int i = 0; i < admins.size(); i++) {
         output += "{";
         output += "\"admin_id\":\"" + admins.get(i).getAdmin_id() + "\",";
         output += "\"admin_addedDate\":\"" + admins.get(i).getAdmin_addedDate() + "\",";
-        output += "\"admin_password\":\"" + admins.get(i).getAdmin_password() + "\",";
         output += "\"admin_username\":\"" + admins.get(i).getAdmin_username() + "\",";
         output += "\"admin_prof_id\":\"" + admins.get(i).getAdmin_prof_id() + "\"";
         output += "},";

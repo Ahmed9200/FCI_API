@@ -5,11 +5,6 @@ package model;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -63,7 +58,7 @@ public class DB {
     public static boolean checkEmailAndPassword(Connection con, String email, String password) {
         try {
             Statement statement = con.createStatement();
-            String strCheck = "select * from users where email= '" + email + "' and password= '" + password + "'";
+            String strCheck = "select * from admins where admin_username= '" + email + "' and admin_password= '" + password + "'";
             statement.executeQuery(strCheck);
 
             return statement.getResultSet().next();
@@ -151,246 +146,7 @@ public class DB {
 
     }
 
-    /*
-    this method for get data from database table 
-    and put it in arraylist and return this arraylist
-     */
-//    public static ArrayList<User> getUsersData(Connection con, String sql) {
-//
-//        try {
-//            ArrayList<User> data = new ArrayList<>();
-//
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery(sql);
-//
-//            while (rs.next()) {
-//
-//                User user = new User();
-//                user.setId(rs.getInt("id"));
-//                user.setName(rs.getString("name"));
-//                user.setNationality(rs.getString("nationality"));
-//                user.setGender(rs.getString("gender"));
-//                user.setAge(rs.getString("age"));
-//                user.setEmail(rs.getString("email"));
-//                user.setPhone(rs.getString("phone"));
-//                user.setPassword(rs.getString("password"));
-//                // set img in base 64 to show it in img tag in html
-//                InputStream inputStream = rs.getBlob("img").getBinaryStream();
-//
-//                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//                byte[] buffer = new byte[4096];
-//                int bytesRead = -1;
-//
-//                while ((bytesRead = inputStream.read(buffer)) != -1) {
-//                    outputStream.write(buffer, 0, bytesRead);
-//                }
-//
-//                byte[] imageBytes = outputStream.toByteArray();
-//                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-//
-//                inputStream.close();
-//                outputStream.close();
-//
-//                user.setBase64img(base64Image);
-//
-//                data.add(user);
-//            }
-//
-//            return data;
-//        } catch (SQLException | IOException ex) {
-//
-//            ex.printStackTrace();
-//            return null;
-//
-//        }
-//
-//    }
-//
-//    public static ArrayList<Invoice_details> getInvoiceDetailsData(Connection con, String sql) {
-//
-//        try {
-//            ArrayList<Invoice_details> data = new ArrayList<>();
-//
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery(sql);
-//
-//            while (rs.next()) {
-//
-//                Invoice_details user = new Invoice_details();
-//                user.setId(rs.getInt("id"));
-//                user.setFname(rs.getString("fname"));
-//                user.setLname(rs.getString("lname"));
-//                user.setPhone(rs.getString("phone"));
-//                user.setEmail(rs.getString("email"));
-//                user.setAddress_line1(rs.getString("address_line1"));
-//                user.setAddress_line2(rs.getString("address_line2"));
-//                user.setTown(rs.getString("town"));
-//                user.setPostcode(rs.getString("postcode"));
-//
-//                data.add(user);
-//            }
-//
-//            return data;
-//        } catch (SQLException ex) {
-//
-//            ex.printStackTrace();
-//            return null;
-//
-//        }
-//
-//    }
-//
-//    public static ArrayList<Item> getItemData(Connection con, String sql) {
-//
-//        try {
-//            ArrayList<Item> data = new ArrayList<>();
-//
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery(sql);
-//            while (rs.next()) {
-//
-//                Item item = new Item();
-//                int id = rs.getInt("item_id");
-//                item.setItem_id(id);
-//                item.setItem_name(rs.getString("item_name"));
-//                item.setCat_name(rs.getString("cat_name"));
-//                item.setCat_id(rs.getInt("item_category_id"));
-//                item.setItem_buyprice(rs.getDouble("item_buyprice"));
-//                item.setItem_sellprice(rs.getDouble("item_sellprice"));
-//                item.setItem_quantity(rs.getInt("item_quantity"));
-//                item.setItem_offer(rs.getInt("item_offer"));
-//                item.setItem_notes(rs.getString("item_notes"));
-//                item.setItem_date(rs.getString("item_date"));
-//                // set img in base 64 to show it in img tag in html
-//                InputStream inputStream = rs.getBlob("item_img").getBinaryStream();
-//
-//                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//                byte[] buffer = new byte[4096];
-//                int bytesRead = -1;
-//
-//                while ((bytesRead = inputStream.read(buffer)) != -1) {
-//                    outputStream.write(buffer, 0, bytesRead);
-//                }
-//
-//                byte[] imageBytes = outputStream.toByteArray();
-//                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-//
-//                inputStream.close();
-//                outputStream.close();
-//
-//                item.setBase64img(base64Image);
-//                item.setItem_feedback(getFeedbacksData(con, "select * from Feedbacks"
-//                        + " where item_id=" + id));
-//                data.add(item);
-//            }
-//
-//            return data;
-//        } catch (SQLException | IOException ex) {
-//
-//            ex.printStackTrace();
-//            return null;
-//
-//        }
-//
-//    }
-//
-//    public static ArrayList<Category> getCategoriesData(Connection con, String sql) {
-//
-//        try {
-//            ArrayList<Category> data = new ArrayList<>();
-//
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery(sql);
-//            while (rs.next()) {
-//
-//                Category item = new Category();
-//                int cat_id = rs.getInt("cat_id");
-//                item.setCat_id(cat_id);
-//                item.setCat_name(rs.getString("cat_name"));
-//                item.setCat_date(rs.getString("cat_date"));
-//                // set img in base 64 to show it in img tag in html
-//                InputStream inputStream = rs.getBlob("cat_img").getBinaryStream();
-//
-//                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//                byte[] buffer = new byte[4096];
-//                int bytesRead = -1;
-//
-//                while ((bytesRead = inputStream.read(buffer)) != -1) {
-//                    outputStream.write(buffer, 0, bytesRead);
-//                }
-//
-//                byte[] imageBytes = outputStream.toByteArray();
-//                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-//
-//                inputStream.close();
-//                outputStream.close();
-//
-//                item.setBase64img(base64Image);
-//
-//                item.setCat_items_byName(getItemData(con, "select * from items_view"
-//                        + " where item_category_id=" + cat_id + " ORDER BY item_name ASC"));
-//
-//                item.setCat_items_byPrice(getItemData(con, "select * from items_view"
-//                        + " where item_category_id=" + cat_id + " ORDER BY item_sellprice ASC"));
-//
-//                data.add(item);
-//            }
-//
-//            return data;
-//        } catch (SQLException | IOException ex) {
-//
-//            ex.printStackTrace();
-//
-//            return null;
-//
-//        }
-//
-//    }
-//
-//    public static ArrayList<Poster> getPostersData(Connection con) {
-//
-//        try {
-//            ArrayList<Poster> data = new ArrayList<>();
-//
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery("select * from Poster_view");
-//            while (rs.next()) {
-//
-//                Poster item = new Poster();
-//                item.setId(rs.getInt("id"));
-//                item.setItem_name(rs.getString("item_name"));
-//                item.setItem_id(rs.getInt("item_id"));
-//                item.setNotes(rs.getString("notes"));
-//                // set img in base 64 to show it in img tag in html
-//                InputStream inputStream = rs.getBlob("img").getBinaryStream();
-//
-//                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//                byte[] buffer = new byte[4096];
-//                int bytesRead = -1;
-//
-//                while ((bytesRead = inputStream.read(buffer)) != -1) {
-//                    outputStream.write(buffer, 0, bytesRead);
-//                }
-//
-//                byte[] imageBytes = outputStream.toByteArray();
-//                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-//
-//                inputStream.close();
-//                outputStream.close();
-//
-//                item.setBase64img(base64Image);
-//                data.add(item);
-//            }
-//
-//            return data;
-//        } catch (SQLException | IOException ex) {
-//
-//            return null;
-//
-//        }
-//
-//    }
-    public static ArrayList<Admins> getFeedbacksData(Connection con, String sql) {
+    public static ArrayList<Admins> getAdmins(Connection con, String sql) {
 
         try {
             ArrayList<Admins> data = new ArrayList<>();
@@ -419,97 +175,63 @@ public class DB {
 
     }
 
-//    public static ArrayList<Invoice> getInvoiceData(Connection con, String sql) {
-//
-//        try {
-//            ArrayList<Invoice> data = new ArrayList<>();
-//
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery(sql);
-//
-//            while (rs.next()) {
-//
-//                Invoice invoice = new Invoice();
-//                int id = rs.getInt("id");
-//                int details_id = rs.getInt("invoice_details_id");
-//                invoice.setId(id);
-//                invoice.setTotal_price(rs.getDouble("total_price"));
-//                invoice.setShipping(rs.getDouble("shipping"));
-//                invoice.setTotal_after_shipping(rs.getDouble("total_after_shipping"));
-//                invoice.setUser_id(rs.getInt("user_id"));
-//                invoice.setStatus(rs.getString("status"));
-//                invoice.setDate(rs.getString("date"));
-//                invoice.setInvoice_details_id(details_id);
-//                invoice.setInvoice_details(getInvoiceDetailsData(con,
-//                        "select * from invoice_details where id =" + details_id).get(0));
-//                invoice.setInvoiceItems(getOrderd_itemsData(con, "select * from orderd_items where invoice_id=" + id));
-//
-//                data.add(invoice);
-//            }
-//
-//            return data;
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            return null;
-//
-//        }
-//
-//    }
-//
-//    public static ArrayList<Orderd_items> getOrderd_itemsData(Connection con, String sql) {
-//
-//        try {
-//            ArrayList<Orderd_items> data = new ArrayList<>();
-//
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery(sql);
-//
-//            while (rs.next()) {
-//
-//                Orderd_items item = new Orderd_items();
-//                item.setId(rs.getInt("id"));
-//                int item_id = rs.getInt("item_id");
-//                item.setItem_id(item_id);
-//                item.setSold_quantity(rs.getInt("sold_quantity"));
-//
-//                item.setItem(getItemData(con, "select * from items_view where item_id=" + item_id).get(0));
-//
-//                data.add(item);
-//            }
-//
-//            return data;
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            return null;
-//
-//        }
-//
-//    }
-//
-//    public static ArrayList<Shipping> getShippingData(Connection con, String sql) {
-//
-//        try {
-//            ArrayList<Shipping> data = new ArrayList<>();
-//
-//            Statement stmt = con.createStatement();
-//            ResultSet rs = stmt.executeQuery(sql);
-//
-//            while (rs.next()) {
-//
-//                Shipping item = new Shipping();
-//                item.setId(rs.getInt("id"));
-//                item.setCity(rs.getString("city"));
-//                item.setShipping(rs.getDouble("shipping"));
-//
-//                data.add(item);
-//            }
-//
-//            return data;
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//            return null;
-//
-//        }
-//
-//    }
+    public static ArrayList<Events> getEvents(Connection con, String sql) {
+
+        try {
+            ArrayList<Events> data = new ArrayList<>();
+
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+
+                Events item = new Events();
+                item.setEvent_id(rs.getInt("event_id"));
+                item.setEvent_organizer(rs.getString("event_organizer"));
+                item.setEvent_description(rs.getString("event_description"));
+                item.setEvent_tittle(rs.getString("event_tittle"));
+                item.setEvent_date(rs.getString("event_date"));
+                item.setEvent_addedBy(rs.getInt("event_addedBy"));
+
+                data.add(item);
+            }
+
+            return data;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
+
+    }
+
+    public static ArrayList<News> getNews(Connection con, String sql) {
+
+        try {
+            ArrayList<News> data = new ArrayList<>();
+
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+
+                News item = new News();
+                item.setNews_id(rs.getInt("news_id"));
+                item.setNews_tittle(rs.getString("news_tittle"));
+                item.setNews_description(rs.getString("news_description"));
+                item.setNews_date(rs.getString("news_date"));
+                item.setNews_addedBy(rs.getInt("news_addedBy"));
+
+                data.add(item);
+            }
+
+            return data;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
+
+    }
+
 }
