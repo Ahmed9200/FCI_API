@@ -13,18 +13,15 @@
     String password = request.getParameter("password");
 
     if (DB.checkEmailAndPassword(con, username, password)) {
-
-        output += "{\"success\": [";
+        output += "{\"result\": [";
         output += "{";
-        output += "\"text\":\"" + "The user is exist and data is correct" + "\"";
+        output += "\"text\":\"" + "success" + "\"";
         output += "},";
-
     } else {
-        output += "{\"error\": [";
+        output += "{\"result\": [";
         output += "{";
-        output += "\"text\":\"" + "There is no User have these data " + "\"";
+        output += "\"text\":\"" + "error" + "\"";
         output += "},";
-
     }
 
     output = output.substring(0, output.length() - 1);
