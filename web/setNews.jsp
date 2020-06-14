@@ -4,7 +4,7 @@
 <%@page import="model.DB"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.Connection"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%
     Connection con = DB.setConnection();
     String output = "";

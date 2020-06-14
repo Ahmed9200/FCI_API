@@ -15,7 +15,10 @@
         output += "\"event_organizer\":\"" + event.get(i).getEvent_organizer() + "\",";
         output += "\"event_description\":\"" + event.get(i).getEvent_description() + "\",";
         output += "\"event_tittle\":\"" + event.get(i).getEvent_tittle() + "\",";
-        output += "\"event_date\":\"" + event.get(i).getEvent_date() + "\",";
+        output += "\"day\":\"" + event.get(i).getDay() + "\",";
+        output += "\"month\":\"" + event.get(i).getMonth() + "\",";
+        output += "\"location\":\"" + event.get(i).getLocation() + "\",";
+        output += "\"homePage\":\"" + event.get(i).getHomePage() + "\",";
         output += "\"event_addedBy\":\"" + event.get(i).getEvent_addedBy() + "\"";
         output += "},";
     }
