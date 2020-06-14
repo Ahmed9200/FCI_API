@@ -8,6 +8,8 @@
 
     String username = request.getParameter("username");
     String password = request.getParameter("password");
+    System.out.println("username = " + username);
+    System.out.println("password = " + password);
 
     if (DB.checkEmailAndPassword(con, username, password)) {
         output += "{\"result\": [";
