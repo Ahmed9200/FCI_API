@@ -9,16 +9,17 @@
     Connection con = DB.setConnection();
     String output = "";
     Events e = new Events();
-
-    e.setEvent_organizer(request.getParameter("event_organizer"));
-    e.setEvent_description(request.getParameter("event_description"));
-    e.setEvent_tittle(request.getParameter("event_tittle"));
-    e.setDay(Integer.parseInt(request.getParameter("day")));
-    e.setEvent_addedBy(Integer.parseInt(request.getParameter("event_addedBy")));
-    e.setMonth(request.getParameter("month"));
-    e.setLocation(request.getParameter("location"));
-    e.setHomePage(Integer.parseInt(request.getParameter("homePage")));
-
+    try {
+        e.setEvent_organizer(request.getParameter("event_organizer"));
+        e.setEvent_description(request.getParameter("event_description"));
+        e.setEvent_tittle(request.getParameter("event_tittle"));
+        e.setDay(Integer.parseInt(request.getParameter("day")));
+        e.setEvent_addedBy(Integer.parseInt(request.getParameter("event_addedBy")));
+        e.setMonth(request.getParameter("month"));
+        e.setLocation(request.getParameter("location"));
+        e.setHomePage(Integer.parseInt(request.getParameter("homePage")));
+    } catch (Exception ex) {
+    }
     if (e.add(con)) {
         output += "{\"result\": [";
         output += "{";
