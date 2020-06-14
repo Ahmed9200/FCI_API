@@ -10,25 +10,25 @@
     String output = "";
     Events e = new Events();
 
-    e.setEvent_tittle(request.getParameter("event_tittle"));
-    e.setEvent_description(request.getParameter("event_description"));
     e.setEvent_organizer(request.getParameter("event_organizer"));
-    e.setEvent_date(request.getParameter("event_date"));
+    e.setEvent_description(request.getParameter("event_description"));
+    e.setEvent_tittle(request.getParameter("event_tittle"));
+    e.setDay(Integer.parseInt(request.getParameter("day")));
     e.setEvent_addedBy(Integer.parseInt(request.getParameter("event_addedBy")));
+    e.setMonth(request.getParameter("month"));
+    e.setLocation(request.getParameter("location"));
+    e.setHomePage(Integer.parseInt(request.getParameter("homePage")));
 
     if (e.add(con)) {
-
-        output += "{\"success\": [";
+        output += "{\"result\": [";
         output += "{";
-        output += "\"text\":\"" + "The user is exist and data is correct" + "\"";
+        output += "\"text\":\"" + "success" + "\"";
         output += "},";
-
     } else {
-        output += "{\"error\": [";
+        output += "{\"result\": [";
         output += "{";
-        output += "\"text\":\"" + "There is no User have these data " + "\"";
+        output += "\"text\":\"" + "error" + "\"";
         output += "},";
-
     }
 
     output = output.substring(0, output.length() - 1);

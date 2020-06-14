@@ -20,6 +20,24 @@ public class News {
     private String news_description;
     private String news_date;
     private int news_addedBy;
+    private String img;
+    private int homePage;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public int getHomePage() {
+        return homePage;
+    }
+
+    public void setHomePage(int homePage) {
+        this.homePage = homePage;
+    }
 
     public int getNews_id() {
         return news_id;
@@ -63,12 +81,14 @@ public class News {
 
     public boolean add(Connection con) {
         try {
-            PreparedStatement ps = con.prepareStatement("insert into news values(?,?,?,?,?)");
+            PreparedStatement ps = con.prepareStatement("insert into news values(?,?,?,?,?,?,?)");
             ps.setInt(1, Integer.parseInt(DB.AutoIncrementCoulmn(con, "news", "news_id")));
             ps.setString(2, news_tittle);
             ps.setString(3, news_description);
             ps.setString(4, news_date);
             ps.setInt(5, news_addedBy);
+            ps.setString(6, img);
+            ps.setInt(7, homePage);
 
             int isAdded = ps.executeUpdate();
 

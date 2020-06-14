@@ -8,8 +8,6 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  *
@@ -21,8 +19,33 @@ public class Events {
     private String event_organizer;
     private String event_tittle;
     private String event_description;
-    private String event_date;
+    private int day;
     private int event_addedBy;
+    private String month;
+    private String location;
+    private int homePage;
+
+    public boolean add(Connection con) {
+        try {
+            PreparedStatement ps = con.prepareStatement("insert into events values(?,?,?,?,?,?,?,?,?)");
+            ps.setInt(1, Integer.parseInt(DB.AutoIncrementCoulmn(con, "events", "event_id")));
+            ps.setString(2, event_organizer);
+            ps.setString(3, event_tittle);
+            ps.setString(4, event_description);
+            ps.setInt(5, day);
+            ps.setInt(6, event_addedBy);
+            ps.setString(7, month);
+            ps.setString(8, location);
+            ps.setInt(9, homePage);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 
     public int getEvent_id() {
         return event_id;
@@ -56,14 +79,6 @@ public class Events {
         this.event_description = event_description;
     }
 
-    public String getEvent_date() {
-        return event_date;
-    }
-
-    public void setEvent_date(String event_date) {
-        this.event_date = event_date;
-    }
-
     public int getEvent_addedBy() {
         return event_addedBy;
     }
@@ -72,22 +87,35 @@ public class Events {
         this.event_addedBy = event_addedBy;
     }
 
-    public boolean add(Connection con) {
-        try {
-            PreparedStatement ps = con.prepareStatement("insert into events values(?,?,?,?,?,?)");
-            ps.setInt(1, Integer.parseInt(DB.AutoIncrementCoulmn(con, "events", "event_id")));
-            ps.setString(2, event_organizer);
-            ps.setString(3, event_tittle);
-            ps.setString(4, event_description);
-            ps.setString(5, event_date);
-            ps.setInt(6, event_addedBy);
+    public String getMonth() {
+        return month;
+    }
 
-            int isAdded = ps.executeUpdate();
+    public void setMonth(String month) {
+        this.month = month;
+    }
 
-            return isAdded > 0;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getHomePage() {
+        return homePage;
+    }
+
+    public void setHomePage(int homePage) {
+        this.homePage = homePage;
     }
 }

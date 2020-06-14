@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -190,8 +189,11 @@ public class DB {
                 item.setEvent_organizer(rs.getString("event_organizer"));
                 item.setEvent_description(rs.getString("event_description"));
                 item.setEvent_tittle(rs.getString("event_tittle"));
-                item.setEvent_date(rs.getString("event_date"));
+                item.setDay(rs.getInt("day"));
                 item.setEvent_addedBy(rs.getInt("event_addedBy"));
+                item.setEvent_tittle(rs.getString("month"));
+                item.setEvent_tittle(rs.getString("location"));
+                item.setHomePage(rs.getInt("homePage"));
 
                 data.add(item);
             }
@@ -221,6 +223,8 @@ public class DB {
                 item.setNews_description(rs.getString("news_description"));
                 item.setNews_date(rs.getString("news_date"));
                 item.setNews_addedBy(rs.getInt("news_addedBy"));
+                item.setImg(rs.getString("image"));
+                item.setHomePage(rs.getInt("homePage"));
 
                 data.add(item);
             }

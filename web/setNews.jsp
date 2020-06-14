@@ -14,20 +14,19 @@
     n.setNews_description(request.getParameter("news_description"));
     n.setNews_date(request.getParameter("news_date"));
     n.setNews_addedBy(Integer.parseInt(request.getParameter("news_addedBy")));
+    n.setImg(request.getParameter("image"));
+    n.setHomePage(Integer.parseInt(request.getParameter("homePage")));
 
     if (n.add(con)) {
-
-        output += "{\"success\": [";
+        output += "{\"result\": [";
         output += "{";
-        output += "\"text\":\"" + "The user is exist and data is correct" + "\"";
+        output += "\"text\":\"" + "success" + "\"";
         output += "},";
-
     } else {
-        output += "{\"error\": [";
+        output += "{\"result\": [";
         output += "{";
-        output += "\"text\":\"" + "There is no User have these data " + "\"";
+        output += "\"text\":\"" + "error" + "\"";
         output += "},";
-
     }
 
     output = output.substring(0, output.length() - 1);
