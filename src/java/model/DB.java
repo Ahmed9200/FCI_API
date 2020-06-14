@@ -207,6 +207,48 @@ public class DB {
 
     }
 
+    public static ArrayList<Professors> getProf(Connection con, String sql) {
+
+        try {
+            ArrayList<Professors> data = new ArrayList<>();
+
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+
+                Professors p = new Professors();
+
+                p.setProf_id(rs.getInt("prof_id"));
+                p.setDept_id(rs.getInt("prof_dept_id"));
+                p.setManagers(rs.getString("managers"));
+                p.setProf_about(rs.getString("prof_about"));
+                p.setProf_addedBy(rs.getInt("prof_addedBy"));
+                p.setProf_address1(rs.getString("prof_address1"));
+                p.setProf_address2(rs.getString("prof_address2"));
+                p.setProf_age(rs.getInt("prof_age"));
+                p.setProf_email(rs.getString("prof_email"));
+                p.setProf_username(rs.getString("prof_username"));
+                p.setProf_password(rs.getString("prof_password"));
+                p.setProf_fullname_arabic(rs.getString("prof_fullname_arabic"));
+                p.setProf_fullname_english(rs.getString("prof_fullname_english"));
+                p.setProf_image(rs.getString("prof_img"));
+                p.setProf_nationality(rs.getString("prof_nationality"));
+                p.setProf_religion(rs.getString("prof_religion"));
+                p.setProf_status(rs.getString("prof_status"));
+
+                data.add(p);
+            }
+
+            return data;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+
+        }
+
+    }
+
     public static ArrayList<News> getNews(Connection con, String sql) {
 
         try {

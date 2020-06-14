@@ -1,6 +1,4 @@
 <%@page import="model.News"%>
-<%@page import="model.Events"%>
-<%@page import="model.Admins"%>
 <%@page import="model.DB"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.Connection"%>
