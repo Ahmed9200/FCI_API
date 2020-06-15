@@ -14,7 +14,7 @@
         output += "\"news_tittle\":\"" + event.get(i).getNews_tittle() + "\",";
         output += "\"news_description\":\"" + event.get(i).getNews_description() + "\",";
         output += "\"news_date\":\"" + event.get(i).getNews_date() + "\",";
-        output += "\"image\":\"" + event.get(i).getImg() + "\",";
+        output += "\"image\":\"" + event.get(i).getBaseImg() + "\",";
         output += "\"homePage\":\"" + event.get(i).getHomePage() + "\",";
         output += "\"news_addedBy\":\"" + event.get(i).getNews_addedBy() + "\"";
         output += "},";

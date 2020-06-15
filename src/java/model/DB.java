@@ -5,14 +5,19 @@ package model;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -265,8 +270,24 @@ public class DB {
                 item.setNews_description(rs.getString("news_description"));
                 item.setNews_date(rs.getString("news_date"));
                 item.setNews_addedBy(rs.getInt("news_addedBy"));
-                item.setImg(rs.getString("image"));
                 item.setHomePage(rs.getInt("homePage"));
+                InputStream inputStream = ((rs.getBlob("image").getBinaryStream()));
+
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[4096];
+                int bytesRead = -1;
+
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+
+                byte[] imageBytes = outputStream.toByteArray();
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                inputStream.close();
+                outputStream.close();
+
+                item.setBaseImg(base64Image);
 
                 data.add(item);
             }
@@ -276,7 +297,10 @@ public class DB {
             ex.printStackTrace();
             return null;
 
+        } catch (IOException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
 
     }
 

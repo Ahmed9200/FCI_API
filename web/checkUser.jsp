@@ -9,11 +9,6 @@
 
     String username = request.getParameter("username");
     String password = request.getParameter("password");
-    InputStream tst = request.getInputStream();
-    System.out.println("username = " + username);
-    System.out.println("password = " + password);
-    System.out.println("password = " + tst.toString());
-    
 
     if (DB.checkEmailAndPassword(con, username, password)) {
         output += "{\"result\": [";

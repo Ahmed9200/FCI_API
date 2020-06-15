@@ -5,9 +5,14 @@
  */
 package model;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -20,14 +25,23 @@ public class News {
     private String news_description;
     private String news_date;
     private int news_addedBy;
-    private String img;
+    private InputStream img;
     private int homePage;
+    private String baseImg;
 
-    public String getImg() {
+    public String getBaseImg() {
+        return baseImg;
+    }
+
+    public void setBaseImg(String baseImg) {
+        this.baseImg = baseImg;
+    }
+
+    public InputStream getImg() {
         return img;
     }
 
-    public void setImg(String img) {
+    public void setImg(InputStream img) {
         this.img = img;
     }
 
@@ -87,7 +101,7 @@ public class News {
             ps.setString(3, news_description);
             ps.setString(4, news_date);
             ps.setInt(5, news_addedBy);
-            ps.setString(6, img);
+            ps.setBlob(6, img);
             ps.setInt(7, homePage);
 
             int isAdded = ps.executeUpdate();
