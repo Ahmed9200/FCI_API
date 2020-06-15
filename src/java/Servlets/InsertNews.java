@@ -37,25 +37,34 @@ public class InsertNews extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
+        response.setContentType("application/json;charset=UTF-8");
         Connection con = DB.setConnection();
         String output = "";
-        ArrayList<News> event = DB.getNews(con, "select * from news");
-        output += "{\"result\": [";
-        for (int i = 0; i < event.size(); i++) {
+        News n = new News();
+        try {
+            n.setNews_tittle(request.getParameter("news_tittle"));
+            n.setNews_description(request.getParameter("news_description"));
+            n.setNews_date(request.getParameter("news_date"));
+            n.setNews_addedBy(Integer.parseInt(request.getParameter("news_addedBy")));
+            n.setImg(request.getPart("image").getInputStream());
+            n.setHomePage(Integer.parseInt(request.getParameter("homePage")));
+        } catch (Exception e) {
+        }
+        if (n.add(con)) {
+            output += "{\"result\": [";
             output += "{";
-            output += "\"news_id\":\"" + event.get(i).getNews_id() + "\",";
-            output += "\"news_tittle\":\"" + event.get(i).getNews_tittle() + "\",";
-            output += "\"news_description\":\"" + event.get(i).getNews_description() + "\",";
-            output += "\"news_date\":\"" + event.get(i).getNews_date() + "\",";
-            output += "\"image\":\"" + event.get(i).getImg() + "\",";
-            output += "\"homePage\":\"" + event.get(i).getHomePage() + "\",";
-            output += "\"news_addedBy\":\"" + event.get(i).getNews_addedBy() + "\"";
+            output += "\"text\":\"" + "success" + "\"";
+            output += "},";
+        } else {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "error" + "\"";
             output += "},";
         }
+
         output = output.substring(0, output.length() - 1);
         output += "]}";
+//    out.print(output);
         response.getWriter().print(output);
     }
 
