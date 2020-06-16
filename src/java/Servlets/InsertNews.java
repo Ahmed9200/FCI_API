@@ -6,6 +6,7 @@
 package Servlets;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import model.DB;
 import model.News;
 
@@ -46,8 +48,17 @@ public class InsertNews extends HttpServlet {
             n.setNews_description(request.getParameter("news_description"));
             n.setNews_date(request.getParameter("news_date"));
             n.setNews_addedBy(Integer.parseInt(request.getParameter("news_addedBy")));
-            n.setImg(request.getPart("image").getInputStream());
             n.setHomePage(Integer.parseInt(request.getParameter("homePage")));
+            InputStream img = null;
+            Part part = request.getPart("image");
+            // Check if user enter no img !
+            if (part != null) {
+                // if user choose an IMG , set item_img variable
+                img = part.getInputStream();
+            }
+
+            n.setImg(img);
+
         } catch (Exception e) {
         }
         if (n.add(con)) {

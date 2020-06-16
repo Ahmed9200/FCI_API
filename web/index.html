@@ -11,6 +11,61 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <form action="InsertNews" enctype="multipart/form-data" method="POST">
+
+            <div class="row">
+                <div class="col">
+                    <br>
+                    <div class="row">
+
+                        <div class="col">
+                            <div class="form-group has-info">
+                                <label class="bmd-label-floating" style="color: #029eb1">Category name</label>
+                                <input type="text" class="form-control" name="news_tittle">
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="form-group has-info">
+                                <label class="bmd-label-floating" style="color: #029eb1">Category date and time</label>
+                                <!--<input type="text" class="" >-->
+                                <input type="text" name="news_date" class='form-control datepicker-here' data-timepicker="true" data-language='en' />
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label style="color: #029eb1">Category image</label>
+                    </div>
+                    <img class="card-img-top" id="imgPrev" src="imgs/unnamed.png" alt="Card image cap">
+                    <div class="form-group">
+                        <button type="button"
+
+                                class="btn btn-info col"
+                                >Choose image</button>
+                        <input style="z-index: 1000;"
+                               type="file"
+                               class="form-control"
+                               name="image"
+                               onchange="showImagePrev(this);" >
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+            <br>
+            <button type="submit" class="btn btn-info">Add</button>
+        </form>
     </body>
 </html>
