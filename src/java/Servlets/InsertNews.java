@@ -7,9 +7,7 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
 import java.sql.Connection;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -75,7 +73,6 @@ public class InsertNews extends HttpServlet {
 
         output = output.substring(0, output.length() - 1);
         output += "]}";
-//    out.print(output);
         response.getWriter().print(output);
     }
 

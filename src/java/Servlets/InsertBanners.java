@@ -6,11 +6,16 @@
 package Servlets;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import model.Bannars;
+import model.DB;
 
 /**
  *
@@ -30,18 +35,42 @@ public class InsertBanners extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InsertBanners</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InsertBanners at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        Connection con = DB.setConnection();
+        String output = "";
+        Bannars n = new Bannars();
+        try {
+            n.setBanner_id(Integer.parseInt(request.getParameter("banner_id")));
+            n.setBanner_tittle(request.getParameter("banner_tittle"));
+            n.setBanner_description(request.getParameter("banner_description"));
+            n.setBanner_addedBy(Integer.parseInt(request.getParameter("banner_addedBy")));
+            InputStream img = null;
+            Part part = request.getPart("banner_img");
+            // Check if user enter no img !
+            if (part != null) {
+                // if user choose an IMG , set item_img variable
+                img = part.getInputStream();
+            }
+
+            n.setBanner_img(img);
+
+        } catch (Exception e) {
         }
+        if (n.add(con)) {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "success" + "\"";
+            output += "},";
+        } else {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "error" + "\"";
+            output += "},";
+        }
+
+        output = output.substring(0, output.length() - 1);
+        output += "]}";
+        response.getWriter().print(output);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

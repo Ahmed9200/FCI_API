@@ -7,10 +7,14 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.DB;
+import model.Graduate_studies_session;
+import model.Student_affairs_session;
 
 /**
  *
@@ -30,18 +34,38 @@ public class InsertStudent_affairs_session extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InsertStudent_affairs_session</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InsertStudent_affairs_session at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        Connection con = DB.setConnection();
+        String output = "";
+        Student_affairs_session n = new Student_affairs_session();
+        try {
+            n.setSas_id(Integer.parseInt(request.getParameter("sas_id")));
+            n.setSas_name_arabic(request.getParameter("sas_name_arabic"));
+            n.setSas_name_english(request.getParameter("sas_name_english"));
+            n.setSas_about(request.getParameter("sas_about"));
+            n.setSas_description(request.getParameter("sas_description"));
+            n.setSas_addedDate(request.getParameter("sas_school_year"));
+            n.setSas_school_year(request.getParameter("sas_addedDate"));
+            n.setSas_addedBy(Integer.parseInt(request.getParameter("sas_addedBy")));
+
+        } catch (Exception e) {
         }
+        if (n.add(con)) {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "success" + "\"";
+            output += "},";
+        } else {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "error" + "\"";
+            output += "},";
+        }
+
+        output = output.substring(0, output.length() - 1);
+        output += "]}";
+        response.getWriter().print(output);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

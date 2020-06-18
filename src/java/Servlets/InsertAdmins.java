@@ -6,11 +6,17 @@
 package Servlets;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import model.Admins;
+import model.DB;
+import model.News;
 
 /**
  *
@@ -30,18 +36,33 @@ public class InsertAdmins extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InsertAdmins</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InsertAdmins at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        Connection con = DB.setConnection();
+        String output = "";
+        Admins n = new Admins();
+
+        n.setAdmin_id(Integer.parseInt(request.getParameter("admin_id")));
+        n.setAdmin_prof_id(Integer.parseInt(request.getParameter("admin_prof_id")));
+        n.setAdmin_username(request.getParameter("admin_username"));
+        n.setAdmin_password(request.getParameter("admin_password"));
+        n.setAdmin_addedDate(request.getParameter("admin_addedDate"));
+
+        if (n.add(con)) {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "success" + "\"";
+            output += "},";
+        } else {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "error" + "\"";
+            output += "},";
         }
+
+        output = output.substring(0, output.length() - 1);
+        output += "]}";
+        response.getWriter().print(output);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

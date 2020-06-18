@@ -6,11 +6,17 @@
 package Servlets;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import model.DB;
+import model.Departments;
+import model.Student_affairs_session;
 
 /**
  *
@@ -30,18 +36,57 @@ public class InsertDepts extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InsertDepts</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InsertDepts at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        Connection con = DB.setConnection();
+        String output = "";
+        Departments n = new Departments();
+        try {
+            n.setDept_id(Integer.parseInt(request.getParameter("dept_id")));
+            n.setDept_name_arabic(request.getParameter("dept_name_arabic"));
+            n.setDept_name_english(request.getParameter("dept_name_english"));
+            n.setDept_description(request.getParameter("dept_description"));
+            n.setDept_price(request.getParameter("dept_price"));
+            n.setDept_date(request.getParameter("dept_date"));
+            n.setDept_prof_id(Integer.parseInt(request.getParameter("dept_prof_id")));
+            n.setDept_addedBy(Integer.parseInt(request.getParameter("dept_addedBy")));
+            n.setProf(request.getParameter("prof"));
+
+            InputStream img = null;
+            InputStream img2 = null;
+            Part part = request.getPart("dept_image");
+            Part part2 = request.getPart("prof_image");
+            // Check if user enter no img !
+            if (part != null && part2 != null) {
+                // if user choose an IMG , set item_img variable
+                img = part.getInputStream();
+                img2 = part2.getInputStream();
+            } else if (part != null) {
+                img = part.getInputStream();
+            } else {
+                img2 = part2.getInputStream();
+            }
+
+            n.setDept_image(img);
+            n.setProf_image(img2);
+
+        } catch (Exception e) {
         }
+        if (n.add(con)) {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "success" + "\"";
+            output += "},";
+        } else {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "error" + "\"";
+            output += "},";
+        }
+
+        output = output.substring(0, output.length() - 1);
+        output += "]}";
+        response.getWriter().print(output);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

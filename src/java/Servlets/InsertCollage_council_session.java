@@ -6,11 +6,17 @@
 package Servlets;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import model.Collage_council_session;
+import model.DB;
+import model.Student_affairs_council;
 
 /**
  *
@@ -30,18 +36,38 @@ public class InsertCollage_council_session extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InsertCollage_council_session</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InsertCollage_council_session at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        Connection con = DB.setConnection();
+        String output = "";
+        Collage_council_session n = new Collage_council_session();
+        try {
+            n.setCcs_id(Integer.parseInt(request.getParameter("ccs_id")));
+            n.setCcs_name_arabic(request.getParameter("ccs_name_arabic"));
+            n.setCcs_name_english(request.getParameter("ccs_name_english"));
+            n.setCcs_about(request.getParameter("ccs_about"));
+            n.setCcs_school_year(request.getParameter("ccs_school_year"));
+            n.setCcs_addedBy(Integer.parseInt(request.getParameter("ccs_addedBy")));
+            n.setCcs_addedDate(request.getParameter("ccs_addedDate"));
+            n.setCcs_description(request.getParameter("ccs_description"));
+
+        } catch (Exception e) {
         }
+        if (n.add(con)) {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "success" + "\"";
+            output += "},";
+        } else {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "error" + "\"";
+            output += "},";
+        }
+
+        output = output.substring(0, output.length() - 1);
+        output += "]}";
+        response.getWriter().print(output);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

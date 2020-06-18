@@ -7,10 +7,14 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Community_service_session;
+import model.DB;
+import model.Graduate_studies_session;
 
 /**
  *
@@ -30,18 +34,38 @@ public class InsertGraduate_studies_session extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InsertGraduate_studies_session</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InsertGraduate_studies_session at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        Connection con = DB.setConnection();
+        String output = "";
+        Graduate_studies_session n = new Graduate_studies_session();
+        try {
+            n.setGss_id(Integer.parseInt(request.getParameter("gss_id")));
+            n.setGss_name_arabic(request.getParameter("gss_name_arabic"));
+            n.setGss_name_english(request.getParameter("gss_name_english"));
+            n.setGss_about(request.getParameter("gss_about"));
+            n.setGss_description(request.getParameter("gss_description"));
+            n.setGss_addedDate(request.getParameter("gss_school_year"));
+            n.setGss_school_year(request.getParameter("gss_addedDate"));
+            n.setGss_addedBy(Integer.parseInt(request.getParameter("gss_addedBy")));
+
+        } catch (Exception e) {
         }
+        if (n.add(con)) {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "success" + "\"";
+            output += "},";
+        } else {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "error" + "\"";
+            output += "},";
+        }
+
+        output = output.substring(0, output.length() - 1);
+        output += "]}";
+        response.getWriter().print(output);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -7,10 +7,14 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Collage_council_session;
+import model.Community_service_session;
+import model.DB;
 
 /**
  *
@@ -30,18 +34,38 @@ public class InsertCommunity_service_session extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InsertCommunity_service_session</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InsertCommunity_service_session at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        Connection con = DB.setConnection();
+        String output = "";
+        Community_service_session n = new Community_service_session();
+        try {
+            n.setCss_id(Integer.parseInt(request.getParameter("css_id")));
+            n.setCss_name_arabic(request.getParameter("css_name_arabic"));
+            n.setCss_name_english(request.getParameter("css_name_english"));
+            n.setCss_about(request.getParameter("css_about"));
+            n.setCss_addedDate(request.getParameter("css_addedDate"));
+            n.setCss_school_year(request.getParameter("css_school_year"));
+            n.setCss_addedBy(Integer.parseInt(request.getParameter("css_addedBy")));
+            n.setCss_description(request.getParameter("css_description"));
+
+        } catch (Exception e) {
         }
+        if (n.add(con)) {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "success" + "\"";
+            output += "},";
+        } else {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "error" + "\"";
+            output += "},";
+        }
+
+        output = output.substring(0, output.length() - 1);
+        output += "]}";
+        response.getWriter().print(output);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
