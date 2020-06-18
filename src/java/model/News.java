@@ -5,14 +5,10 @@
  */
 package model;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.http.Part;
 
 /**
  *
@@ -28,6 +24,26 @@ public class News {
     private InputStream img;
     private int homePage;
     private String baseImg;
+
+    public boolean add(Connection con) {
+        try {
+            PreparedStatement ps = con.prepareStatement("insert into news values(?,?,?,?,?,?,?)");
+            ps.setInt(1, Integer.parseInt(DB.AutoIncrementCoulmn(con, "news", "news_id")));
+            ps.setString(2, news_tittle);
+            ps.setString(3, news_description);
+            ps.setString(4, news_date);
+            ps.setInt(5, news_addedBy);
+            ps.setBlob(6, img);
+            ps.setInt(7, homePage);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 
     public String getBaseImg() {
         return baseImg;
@@ -91,25 +107,5 @@ public class News {
 
     public void setNews_addedBy(int news_addedBy) {
         this.news_addedBy = news_addedBy;
-    }
-
-    public boolean add(Connection con) {
-        try {
-            PreparedStatement ps = con.prepareStatement("insert into news values(?,?,?,?,?,?,?)");
-            ps.setInt(1, Integer.parseInt(DB.AutoIncrementCoulmn(con, "news", "news_id")));
-            ps.setString(2, news_tittle);
-            ps.setString(3, news_description);
-            ps.setString(4, news_date);
-            ps.setInt(5, news_addedBy);
-            ps.setBlob(6, img);
-            ps.setInt(7, homePage);
-
-            int isAdded = ps.executeUpdate();
-
-            return isAdded > 0;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
     }
 }
