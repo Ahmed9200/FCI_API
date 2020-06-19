@@ -7,10 +7,14 @@ package Servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.DB;
+import model.Students;
+import model.Subjects;
 
 /**
  *
@@ -30,18 +34,43 @@ public class InsertSubjetcs extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InsertSubjetcs</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InsertSubjetcs at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        Connection con = DB.setConnection();
+        String output = "";
+        Subjects n = new Subjects();
+        try {
+            n.setSub_id(Integer.parseInt(request.getParameter("sub_id")));
+            n.setSub_code(request.getParameter("sub_code"));
+            n.setSub_term_no(Integer.parseInt(request.getParameter("sub_term_no")));
+            n.setSub_name_arabic(request.getParameter("sub_name_arabic"));
+            n.setSub_name_english(request.getParameter("sub_name_english"));
+            n.setSub_description((request.getParameter("sub_description")));
+            n.setSub_low_degree(Double.parseDouble(request.getParameter("sub_low_degree")));
+            n.setSub_high_degree(Double.parseDouble(request.getParameter("sub_high_degree")));
+            n.setSub_recourse_link(request.getParameter("sub_recourse_link"));
+            n.setSub_collage_year(Integer.parseInt(request.getParameter("sub_collage_year")));
+            n.setSub_dept_id(Integer.parseInt(request.getParameter("sub_dept_id")));
+            n.setSub_addedDate((request.getParameter("sub_addedDate")));
+            n.setSub_addedBy(Integer.parseInt(request.getParameter("sub_addedBy")));
+
+        } catch (Exception e) {
         }
+        if (n.add(con)) {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "success" + "\"";
+            output += "},";
+        } else {
+            output += "{\"result\": [";
+            output += "{";
+            output += "\"text\":\"" + "error" + "\"";
+            output += "},";
+        }
+
+        output = output.substring(0, output.length() - 1);
+        output += "]}";
+        response.getWriter().print(output);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

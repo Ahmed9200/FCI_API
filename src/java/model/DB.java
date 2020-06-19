@@ -272,10 +272,27 @@ public class DB {
                 p.setProf_password(rs.getString("prof_password"));
                 p.setProf_fullname_arabic(rs.getString("prof_fullname_arabic"));
                 p.setProf_fullname_english(rs.getString("prof_fullname_english"));
-                p.setProf_image(rs.getString("prof_img"));
                 p.setProf_nationality(rs.getString("prof_nationality"));
                 p.setProf_religion(rs.getString("prof_religion"));
                 p.setProf_status(rs.getString("prof_status"));
+
+                InputStream inputStream = ((rs.getBlob("prof_img").getBinaryStream()));
+
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[4096];
+                int bytesRead = -1;
+
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+
+                byte[] imageBytes = outputStream.toByteArray();
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                inputStream.close();
+                outputStream.close();
+
+                p.setBase64_image(base64Image);
 
                 data.add(p);
             }
@@ -285,7 +302,10 @@ public class DB {
             ex.printStackTrace();
             return null;
 
+        } catch (IOException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
 
     }
 

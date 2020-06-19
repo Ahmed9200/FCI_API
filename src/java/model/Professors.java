@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -28,7 +29,8 @@ public class Professors {
     private String prof_password;
     private String prof_about;
     private String prof_status;
-    private String prof_image;
+    private InputStream prof_image;
+    String base64_image;
     private int prof_addedBy;
     private String prof_address2;
     private String managers;
@@ -49,7 +51,7 @@ public class Professors {
             ps.setString(11, prof_password);
             ps.setString(12, prof_about);
             ps.setString(13, prof_status);
-            ps.setString(14, prof_image);
+            ps.setBlob(14, prof_image);
             ps.setInt(15, prof_addedBy);
             ps.setString(16, prof_address2);
             ps.setString(17, managers);
@@ -63,6 +65,15 @@ public class Professors {
         }
     }
 
+    public String getBase64_image() {
+        return base64_image;
+    }
+
+    public void setBase64_image(String base64_image) {
+        this.base64_image = base64_image;
+    }
+
+    
     public int getProf_id() {
         return prof_id;
     }
@@ -167,11 +178,11 @@ public class Professors {
         this.prof_status = prof_status;
     }
 
-    public String getProf_image() {
+    public InputStream getProf_image() {
         return prof_image;
     }
 
-    public void setProf_image(String prof_image) {
+    public void setProf_image(InputStream prof_image) {
         this.prof_image = prof_image;
     }
 
