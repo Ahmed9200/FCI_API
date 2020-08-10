@@ -39,7 +39,7 @@ public class InsertSubjetcs extends HttpServlet {
         String output = "";
         Subjects n = new Subjects();
         try {
-            n.setSub_id(Integer.parseInt(request.getParameter("sub_id")));
+            
             n.setSub_code(request.getParameter("sub_code"));
             n.setSub_term_no(Integer.parseInt(request.getParameter("sub_term_no")));
             n.setSub_name_arabic(request.getParameter("sub_name_arabic"));
