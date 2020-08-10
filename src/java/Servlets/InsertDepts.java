@@ -41,7 +41,7 @@ public class InsertDepts extends HttpServlet {
         String output = "";
         Departments n = new Departments();
         try {
-            n.setDept_id(Integer.parseInt(request.getParameter("dept_id")));
+//            n.setDept_id(Integer.parseInt(request.getParameter("dept_id")));
             n.setDept_name_arabic(request.getParameter("dept_name_arabic"));
             n.setDept_name_english(request.getParameter("dept_name_english"));
             n.setDept_description(request.getParameter("dept_description"));

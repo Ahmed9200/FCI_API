@@ -41,7 +41,7 @@ public class InsertStudent_affairs_council extends HttpServlet {
         String output = "";
         Student_affairs_council n = new Student_affairs_council();
         try {
-            n.setSac_id(Integer.parseInt(request.getParameter("sac_id")));
+//            n.setSac_id(Integer.parseInt(request.getParameter("sac_id")));
             n.setSac_prof_id(Integer.parseInt(request.getParameter("sac_prof_id")));
             n.setSac_prof_state(request.getParameter("sac_prof_state"));
             n.setSac_addedBy(Integer.parseInt(request.getParameter("sac_addedBy")));

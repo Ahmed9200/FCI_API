@@ -39,7 +39,7 @@ public class InsertCollage_council extends HttpServlet {
         String output = "";
         Collage_council n = new Collage_council();
         try {
-            n.setCc_id(Integer.parseInt(request.getParameter("cc_id")));
+//            n.setCc_id(Integer.parseInt(request.getParameter("cc_id")));
             n.setCc_prof_id(Integer.parseInt(request.getParameter("cc_prof_id")));
             n.setCc_prof_state(request.getParameter("cc_prof_state"));
             n.setCc_addedBy(Integer.parseInt(request.getParameter("cc_addedBy")));

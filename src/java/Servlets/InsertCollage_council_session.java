@@ -41,7 +41,7 @@ public class InsertCollage_council_session extends HttpServlet {
         String output = "";
         Collage_council_session n = new Collage_council_session();
         try {
-            n.setCcs_id(Integer.parseInt(request.getParameter("ccs_id")));
+//            n.setCcs_id(Integer.parseInt(request.getParameter("ccs_id")));
             n.setCcs_name_arabic(request.getParameter("ccs_name_arabic"));
             n.setCcs_name_english(request.getParameter("ccs_name_english"));
             n.setCcs_about(request.getParameter("ccs_about"));

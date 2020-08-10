@@ -40,7 +40,7 @@ public class InsertBanners extends HttpServlet {
         String output = "";
         Bannars n = new Bannars();
         try {
-            n.setBanner_id(Integer.parseInt(request.getParameter("banner_id")));
+//            n.setBanner_id(Integer.parseInt(request.getParameter("banner_id")));
             n.setBanner_tittle(request.getParameter("banner_tittle"));
             n.setBanner_description(request.getParameter("banner_description"));
             n.setBanner_addedBy(Integer.parseInt(request.getParameter("banner_addedBy")));

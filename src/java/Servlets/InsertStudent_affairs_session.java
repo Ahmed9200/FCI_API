@@ -39,7 +39,7 @@ public class InsertStudent_affairs_session extends HttpServlet {
         String output = "";
         Student_affairs_session n = new Student_affairs_session();
         try {
-            n.setSas_id(Integer.parseInt(request.getParameter("sas_id")));
+//            n.setSas_id(Integer.parseInt(request.getParameter("sas_id")));
             n.setSas_name_arabic(request.getParameter("sas_name_arabic"));
             n.setSas_name_english(request.getParameter("sas_name_english"));
             n.setSas_about(request.getParameter("sas_about"));

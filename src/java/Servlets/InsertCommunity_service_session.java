@@ -39,7 +39,7 @@ public class InsertCommunity_service_session extends HttpServlet {
         String output = "";
         Community_service_session n = new Community_service_session();
         try {
-            n.setCss_id(Integer.parseInt(request.getParameter("css_id")));
+//            n.setCss_id(Integer.parseInt(request.getParameter("css_id")));
             n.setCss_name_arabic(request.getParameter("css_name_arabic"));
             n.setCss_name_english(request.getParameter("css_name_english"));
             n.setCss_about(request.getParameter("css_about"));

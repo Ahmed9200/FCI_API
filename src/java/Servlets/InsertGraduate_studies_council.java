@@ -41,7 +41,7 @@ public class InsertGraduate_studies_council extends HttpServlet {
         String output = "";
         Graduate_studies_council n = new Graduate_studies_council();
         try {
-            n.setGsc_id(Integer.parseInt(request.getParameter("gsc_id")));
+//            n.setGsc_id(Integer.parseInt(request.getParameter("gsc_id")));
             n.setGsc_prof_id(Integer.parseInt(request.getParameter("gsc_prof_id")));
             n.setGsc_prof_state(request.getParameter("gsc_prof_state"));
             n.setGsc_addedBy(Integer.parseInt(request.getParameter("gsc_addedBy")));

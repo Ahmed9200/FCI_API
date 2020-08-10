@@ -41,7 +41,7 @@ public class InsertProfessors extends HttpServlet {
         String output = "";
         Professors n = new Professors();
         try {
-            n.setProf_id(Integer.parseInt(request.getParameter("prof_id")));
+//            n.setProf_id(Integer.parseInt(request.getParameter("prof_id")));
             n.setProf_fullname_arabic(request.getParameter("prof_fullname_arabic"));
             n.setProf_fullname_english(request.getParameter("prof_fullname_english"));
             n.setDept_id(Integer.parseInt(request.getParameter("dept_id")));

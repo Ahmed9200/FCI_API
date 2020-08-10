@@ -41,7 +41,7 @@ public class InsertComminity_service_council extends HttpServlet {
         String output = "";
         Community_service_council n = new Community_service_council();
         try {
-            n.setCsc_id(Integer.parseInt(request.getParameter("csc_id")));
+//            n.setCsc_id(Integer.parseInt(request.getParameter("csc_id")));
             n.setCsc_prof_id(Integer.parseInt(request.getParameter("csc_prof_id")));
             n.setCsc_prof_state(request.getParameter("csc_prof_state"));
             n.setCsc_addedBy(Integer.parseInt(request.getParameter("csc_addedBy")));

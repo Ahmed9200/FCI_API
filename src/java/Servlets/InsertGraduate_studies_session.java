@@ -39,7 +39,7 @@ public class InsertGraduate_studies_session extends HttpServlet {
         String output = "";
         Graduate_studies_session n = new Graduate_studies_session();
         try {
-            n.setGss_id(Integer.parseInt(request.getParameter("gss_id")));
+//            n.setGss_id(Integer.parseInt(request.getParameter("gss_id")));
             n.setGss_name_arabic(request.getParameter("gss_name_arabic"));
             n.setGss_name_english(request.getParameter("gss_name_english"));
             n.setGss_about(request.getParameter("gss_about"));

@@ -41,7 +41,7 @@ public class InsertAdmins extends HttpServlet {
         String output = "";
         Admins n = new Admins();
 
-        n.setAdmin_id(Integer.parseInt(request.getParameter("admin_id")));
+//        n.setAdmin_id(Integer.parseInt(request.getParameter("admin_id")));
         n.setAdmin_prof_id(Integer.parseInt(request.getParameter("admin_prof_id")));
         n.setAdmin_username(request.getParameter("admin_username"));
         n.setAdmin_password(request.getParameter("admin_password"));
