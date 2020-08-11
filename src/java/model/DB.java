@@ -326,6 +326,7 @@ public class DB {
                 item.setNews_date(rs.getString("news_date"));
                 item.setNews_addedBy(rs.getInt("news_addedBy"));
                 item.setHomePage(rs.getInt("homePage"));
+
                 InputStream inputStream = ((rs.getBlob("image").getBinaryStream()));
 
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -785,41 +786,47 @@ public class DB {
                 item.setDept_prof_id(rs.getInt("dept_prof_id"));
                 item.setDept_addedBy(rs.getInt("dept_addedBy"));
                 item.setProf(rs.getString("prof"));
-                InputStream inputStream = ((rs.getBlob("dept_image").getBinaryStream()));
-                InputStream inputStream2 = ((rs.getBlob("prof_image").getBinaryStream()));
 
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                byte[] buffer = new byte[4096];
-                int bytesRead = -1;
+                try {
+                    InputStream inputStream = ((rs.getBlob("dept_image").getBinaryStream()));
+                    InputStream inputStream2 = ((rs.getBlob("prof_image").getBinaryStream()));
 
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
+
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+
+                    item.setBase64_dept(base64Image);
+
+                    ByteArrayOutputStream outputStream2 = new ByteArrayOutputStream();
+                    byte[] buffer2 = new byte[4096];
+                    int bytesRead2 = -1;
+
+                    while ((bytesRead2 = inputStream2.read(buffer2)) != -1) {
+                        outputStream2.write(buffer2, 0, bytesRead2);
+                    }
+
+                    byte[] imageBytes2 = outputStream2.toByteArray();
+                    String base64Image2 = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream2.close();
+                    outputStream2.close();
+
+                    item.setBase64_prof(base64Image2);
+                } catch (Exception e) {
+                    item.setBase64_prof("noImage");
+                    item.setBase64_dept("noImage");
+
                 }
-
-                byte[] imageBytes = outputStream.toByteArray();
-                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-
-                inputStream.close();
-                outputStream.close();
-
-                item.setBase64_dept(base64Image);
-
-                ByteArrayOutputStream outputStream2 = new ByteArrayOutputStream();
-                byte[] buffer2 = new byte[4096];
-                int bytesRead2 = -1;
-
-                while ((bytesRead2 = inputStream2.read(buffer2)) != -1) {
-                    outputStream2.write(buffer2, 0, bytesRead2);
-                }
-
-                byte[] imageBytes2 = outputStream2.toByteArray();
-                String base64Image2 = Base64.getEncoder().encodeToString(imageBytes);
-
-                inputStream2.close();
-                outputStream2.close();
-
-                item.setBase64_prof(base64Image2);
-
                 data.add(item);
             }
 
@@ -828,10 +835,7 @@ public class DB {
             ex.printStackTrace();
             return null;
 
-        } catch (IOException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
 
     }
 }
