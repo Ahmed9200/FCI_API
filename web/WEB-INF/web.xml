@@ -60,6 +60,10 @@
         <servlet-name>InsertSubjetcs</servlet-name>
         <servlet-class>Servlets.InsertSubjetcs</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteRecord</servlet-name>
+        <servlet-class>Servlets.DeleteRecord</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>InsertNews</servlet-name>
         <url-pattern>/InsertNews</url-pattern>
@@ -119,6 +123,10 @@
     <servlet-mapping>
         <servlet-name>InsertSubjetcs</servlet-name>
         <url-pattern>/InsertSubjetcs</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteRecord</servlet-name>
+        <url-pattern>/DeleteRecord</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
