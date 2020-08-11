@@ -8,6 +8,8 @@ package Servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +20,8 @@ import model.Subjects;
  *
  * @author 20102
  */
+@WebServlet(name = "InsertSubjetcs", urlPatterns = ("/InsertSubjetcs"))
+@MultipartConfig(maxFileSize = 1024 * 1024 * 50)// 1.5 MB
 public class InsertSubjetcs extends HttpServlet {
 
     /**
@@ -37,7 +41,7 @@ public class InsertSubjetcs extends HttpServlet {
         String output = "";
         Subjects n = new Subjects();
         try {
-            
+
             n.setSub_code(request.getParameter("sub_code"));
             n.setSub_term_no(Integer.parseInt(request.getParameter("sub_term_no")));
             n.setSub_name_arabic(request.getParameter("sub_name_arabic"));

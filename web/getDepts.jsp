@@ -7,7 +7,6 @@
     Connection con = DB.setConnection();
     String output = "";
     ArrayList<Departments> d = DB.getDepartments(con, "select * from departments");
-    System.out.println("d= " + d);
     output += "{\"result\": [";
     for (int i = 0; i < d.size(); i++) {
         output += "{";

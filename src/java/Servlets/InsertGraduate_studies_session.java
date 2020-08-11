@@ -8,6 +8,8 @@ package Servlets;
 import java.io.IOException;
 import java.sql.Connection;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +20,8 @@ import model.Graduate_studies_session;
  *
  * @author 20102
  */
+@WebServlet(name = "InsertGraduate_studies_session", urlPatterns = ("/InsertGraduate_studies_session"))
+@MultipartConfig(maxFileSize = 1024 * 1024 * 50)// 1.5 MB
 public class InsertGraduate_studies_session extends HttpServlet {
 
     /**
