@@ -477,24 +477,28 @@ public class DB {
                 item.setCsc_addedBy(rs.getInt("csc_addedBy"));
                 item.setName(rs.getString("name"));
                 item.setPosition(rs.getString("position"));
-                InputStream inputStream = ((rs.getBlob("image").getBinaryStream()));
+                try {
+                    InputStream inputStream = ((rs.getBlob("image").getBinaryStream()));
 
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                byte[] buffer = new byte[4096];
-                int bytesRead = -1;
+                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                    byte[] buffer = new byte[4096];
+                    int bytesRead = -1;
 
-                while ((bytesRead = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
+
+                    byte[] imageBytes = outputStream.toByteArray();
+                    String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+
+                    inputStream.close();
+                    outputStream.close();
+
+                    item.setBase64_image(base64Image);
+                } catch (Exception e) {
+
+                    item.setBase64_image("noImage");
                 }
-
-                byte[] imageBytes = outputStream.toByteArray();
-                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-
-                inputStream.close();
-                outputStream.close();
-
-                item.setBase64_image(base64Image);
-
                 data.add(item);
             }
 
@@ -502,11 +506,7 @@ public class DB {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
-
-        } catch (IOException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
 
     }
 
