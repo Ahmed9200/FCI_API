@@ -45,6 +45,36 @@ public class News {
         }
     }
 
+    public boolean update(Connection con) {
+        try {
+            String query = "UPDATE news \n"
+                    + "SET \n"
+                    + "    news_tittle = ? ,"
+                    + "    news_description = ? ,"
+                    + "    news_date = ? ,"
+                    + "    news_addedBy = ? ,"
+                    + "    img = ? ,"
+                    + "    homePage = ? "
+                    + "WHERE\n"
+                    + "    news_id = ?;";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, news_tittle);
+            ps.setString(2, news_description);
+            ps.setString(3, news_date);
+            ps.setInt(4, news_addedBy);
+            ps.setBlob(5, img);
+            ps.setInt(6, homePage);
+            ps.setInt(7, news_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     public String getBaseImg() {
         return baseImg;
     }

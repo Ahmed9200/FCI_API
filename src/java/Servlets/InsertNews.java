@@ -42,6 +42,7 @@ public class InsertNews extends HttpServlet {
         String output = "";
         News n = new News();
         try {
+
             n.setNews_tittle(request.getParameter("news_tittle"));
             n.setNews_description(request.getParameter("news_description"));
             n.setNews_date(request.getParameter("news_date"));
@@ -59,7 +60,20 @@ public class InsertNews extends HttpServlet {
 
         } catch (Exception e) {
         }
-        if (n.add(con)) {
+
+        boolean tst = false;
+
+        if (request.getParameter("op").equals("1")) {
+
+            tst = n.add(con);
+
+        } else if (request.getParameter("op").equals("2")) {
+            n.setNews_id(Integer.parseInt(request.getParameter("news_id")));
+            tst = n.update(con);
+
+        }
+
+        if (tst) {
             output += "{\"result\": [";
             output += "{";
             output += "\"text\":\"" + "success" + "\"";
