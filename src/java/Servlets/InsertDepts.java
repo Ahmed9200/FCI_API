@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import model.DB;
 import model.Departments;
-import model.Professors;
 
 /**
  *
@@ -52,24 +51,25 @@ public class InsertDepts extends HttpServlet {
             n.setDept_date(request.getParameter("dept_date"));
             n.setDept_prof_id(Integer.parseInt(request.getParameter("dept_prof_id")));
             n.setDept_addedBy(Integer.parseInt(request.getParameter("dept_addedBy")));
-
-            Professors prof = DB.getProf(con, "select * from Professors where prof_id=" + n.getDept_prof_id()).get(0);
-
-            n.setProf(prof.getProf_fullname_arabic());
+            n.setProf(request.getParameter("prof"));
 
             InputStream img = null;
-//            InputStream img2 = null;
+            InputStream img2 = null;
             Part part = request.getPart("dept_image");
-//            Part part2 = request.getPart("prof_image");
+            Part part2 = request.getPart("prof_image");
             // Check if user enter no img !
-            if (part != null ) {
+            if (part != null && part2 != null) {
                 // if user choose an IMG , set item_img variable
                 img = part.getInputStream();
-//                img2 = part2.getInputStream();
+                img2 = part2.getInputStream();
+            } else if (part != null) {
+                img = part.getInputStream();
+            } else {
+                img2 = part2.getInputStream();
             }
 
             n.setDept_image(img);
-            n.setProf_image(prof.getProf_image());
+            n.setProf_image(img2);
 
         } catch (Exception e) {
         }
