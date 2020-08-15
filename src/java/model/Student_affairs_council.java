@@ -109,4 +109,36 @@ public class Student_affairs_council {
         this.base64_image = base64_image;
     }
 
+    public boolean update(Connection con) {
+
+        try {
+
+            String query = "update student_affairs_council set sac_prof_id = ? , "
+                    + "sac_prof_state = ? , "
+                    + "sac_addedBy = ? , "
+                    + "name = ? , "
+                    + "position = ? , "
+                    + "image = ? "
+                    + "  \n where sac_id = ? ;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setInt(1, sac_prof_id);
+            ps.setString(2, sac_prof_state);
+            ps.setInt(3, sac_addedBy);
+            ps.setString(4, name);
+            ps.setString(5, position);
+            ps.setBlob(6, image);
+            ps.setInt(7, sac_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
 }

@@ -109,4 +109,38 @@ public class Graduate_studies_session {
         this.gss_addedBy = gss_addedBy;
     }
 
+    public boolean update(Connection con) {
+
+        try {
+
+            String query = "update graduate_studies_session set gss_name_arabic = ? , "
+                    + "gss_name_english = ? , "
+                    + "gss_about = ? , "
+                    + "gss_description = ? , "
+                    + "gss_school_year = ? , "
+                    + "gss_addedDate = ? , "
+                    + "gss_addedBy = ? "
+                    + "  \n where gss_id = ? ;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setString(1, gss_name_arabic);
+            ps.setString(2, gss_name_english);
+            ps.setString(3, gss_about);
+            ps.setString(4, gss_description);
+            ps.setString(5, gss_school_year);
+            ps.setString(6, gss_addedDate);
+            ps.setInt(7, gss_addedBy);
+            ps.setInt(8, gss_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
 }

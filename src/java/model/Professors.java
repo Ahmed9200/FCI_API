@@ -73,7 +73,6 @@ public class Professors {
         this.base64_image = base64_image;
     }
 
-    
     public int getProf_id() {
         return prof_id;
     }
@@ -208,6 +207,58 @@ public class Professors {
 
     public void setManagers(String managers) {
         this.managers = managers;
+    }
+
+    public boolean update(Connection con) {
+
+        try {
+
+            String query = "update professors set prof_fullname_arabic = ? , "
+                    + "prof_fullname_english = ? , "
+                    + "dept_id = ? , "
+                    + "prof_email = ? , "
+                    + "prof_age = ? , "
+                    + "prof_nationality = ? , "
+                    + "prof_address1 = ? , "
+                    + "prof_religion = ? , "
+                    + "prof_username = ? , "
+                    + "prof_password = ? , "
+                    + "prof_about = ? , "
+                    + "prof_status = ? , "
+                    + "prof_image = ? , "
+                    + "prof_addedBy = ? , "
+                    + "prof_address2 = ? , "
+                    + "managers = ? "
+                    + "  \n where prof_id = ? ;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setString(1, prof_fullname_arabic);
+            ps.setString(2, prof_fullname_english);
+            ps.setInt(3, dept_id);
+            ps.setString(4, prof_email);
+            ps.setInt(5, prof_age);
+            ps.setString(6, prof_nationality);
+            ps.setString(7, prof_address1);
+            ps.setString(8, prof_religion);
+            ps.setString(9, prof_username);
+            ps.setString(10, prof_password);
+            ps.setString(11, prof_about);
+            ps.setString(12, prof_status);
+            ps.setBlob(13, prof_image);
+            ps.setInt(14, prof_addedBy);
+            ps.setString(15, prof_address2);
+            ps.setString(16, managers);
+            ps.setInt(17, prof_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
     }
 
 }

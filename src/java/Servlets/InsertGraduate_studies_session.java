@@ -52,7 +52,20 @@ public class InsertGraduate_studies_session extends HttpServlet {
 
         } catch (Exception e) {
         }
-        if (n.add(con)) {
+
+        boolean tst = false;
+
+        if (request.getParameter("op").equals("1")) {
+
+            tst = n.add(con);
+
+        } else if (request.getParameter("op").equals("2")) {
+            n.setGss_id(Integer.parseInt(request.getParameter("gss_id")));
+            tst = n.update(con);
+
+        }
+
+        if (tst) {
             output += "{\"result\": [";
             output += "{";
             output += "\"text\":\"" + "success" + "\"";

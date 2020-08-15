@@ -158,4 +158,44 @@ public class Departments {
         this.base64_prof = base64_prof;
     }
 
+    public boolean update(Connection con) {
+
+        try {
+
+            String query = "update departments set dept_name_arabic = ? , "
+                    + "dept_name_english = ? , "
+                    + "dept_description = ? , "
+                    + "dept_price = ? , "
+                    + "dept_date = ? , "
+                    + "dept_prof_id = ? , "
+                    + "dept_addedBy = ? , "
+                    + "prof = ? , "
+                    + "dept_image = ? , "
+                    + "prof_image = ? "
+                    + "  \n where dept_id = ? ;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setString(1, dept_name_arabic);
+            ps.setString(2, dept_name_english);
+            ps.setString(3, dept_description);
+            ps.setString(4, dept_price);
+            ps.setString(5, dept_date);
+            ps.setInt(6, dept_prof_id);
+            ps.setInt(7, dept_addedBy);
+            ps.setString(8, prof);
+            ps.setBlob(9, dept_image);
+            ps.setBlob(10, prof_image);
+            ps.setInt(11, dept_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
 }

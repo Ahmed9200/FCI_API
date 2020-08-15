@@ -159,4 +159,46 @@ public class Subjects {
         this.sub_addedBy = sub_addedBy;
     }
 
+    public boolean update(Connection con) {
+
+        try {
+            String query = "update subjects set sub_code = ? , "
+                    + "sub_term_no = ? , "
+                    + "sub_name_arabic = ? , "
+                    + "sub_name_english = ? , "
+                    + "sub_description = ? , "
+                    + "sub_low_degree = ? , "
+                    + "sub_high_degree = ? , "
+                    + "sub_recourse_link = ? , "
+                    + "sub_collage_year = ? , "
+                    + "sub_dept_id = ? , "
+                    + "sub_addedDate = ? , "
+                    + "sub_addedBy = ? "
+                    + "  \n where sub_id = ? ;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setString(1, sub_code);
+            ps.setInt(2, sub_term_no);
+            ps.setString(3, sub_name_arabic);
+            ps.setString(4, sub_name_english);
+            ps.setString(5, sub_description);
+            ps.setDouble(6, sub_low_degree);
+            ps.setDouble(7, sub_high_degree);
+            ps.setString(8, sub_recourse_link);
+            ps.setInt(9, sub_collage_year);
+            ps.setInt(10, sub_dept_id);
+            ps.setString(11, sub_addedDate);
+            ps.setInt(12, sub_addedBy);
+            ps.setInt(13, sub_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
 }

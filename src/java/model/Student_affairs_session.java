@@ -109,4 +109,37 @@ public class Student_affairs_session {
         this.sas_addedBy = sas_addedBy;
     }
 
+    public boolean update(Connection con) {
+
+        try {
+
+            String query = "update student_affairs_session set sas_name_arabic = ? , "
+                    + "sas_name_english = ? , "
+                    + "sas_about = ? , "
+                    + "sas_description = ? , "
+                    + "sas_school_year = ? , "
+                    + "sas_addedDate = ? , "
+                    + "sas_addedBy = ? "
+                    + "  \n where sas_id = ? ;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setString(1, sas_name_arabic);
+            ps.setString(2, sas_name_english);
+            ps.setString(3, sas_about);
+            ps.setString(4, sas_description);
+            ps.setString(5, sas_school_year);
+            ps.setString(6, sas_addedDate);
+            ps.setInt(7, sas_addedBy);
+            ps.setInt(8, sas_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
 }

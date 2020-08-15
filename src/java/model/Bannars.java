@@ -99,4 +99,33 @@ public class Bannars {
         this.banner_addedBy = banner_addedBy;
     }
 
+    public boolean update(Connection con) {
+        try {
+
+            String query = "update banners set banner_tittle = ? , "
+                    + "banner_description = ? , "
+                    + "banner_img = ? , "
+                    + "banner_date = ? , "
+                    + "banner_addedBy = ?  "
+                    + "  \n where banner_id = ? ;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, banner_tittle);
+            ps.setString(2, banner_description);
+            ps.setBlob(3, banner_img);
+            ps.setString(4, banner_date);
+            ps.setInt(5, banner_addedBy);
+
+            ps.setInt(6, banner_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
 }

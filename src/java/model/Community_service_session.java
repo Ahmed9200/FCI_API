@@ -109,4 +109,38 @@ public class Community_service_session {
         this.css_description = css_description;
     }
 
+    public boolean update(Connection con) {
+
+        try {
+
+            String query = "update community_service_session set css_name_arabic = ? , "
+                    + "css_name_english = ? , "
+                    + "css_about = ? , "
+                    + "css_addedDate = ? , "
+                    + "css_school_year = ? , "
+                    + "css_addedBy = ? , "
+                    + "css_description = ? "
+                    + "  \n where css_id = ? ;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setString(1, css_name_arabic);
+            ps.setString(2, css_name_english);
+            ps.setString(3, css_about);
+            ps.setString(4, css_addedDate);
+            ps.setString(5, css_school_year);
+            ps.setInt(6, css_addedBy);
+            ps.setString(7, css_description);
+            ps.setInt(8, css_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
 }

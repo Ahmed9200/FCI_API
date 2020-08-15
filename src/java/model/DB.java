@@ -26,7 +26,7 @@ public class DB {
 
     // Declare Global Variable 
     private static Connection connect;
-    private static final String DB_NAME = "fci";
+    private static final String DB_NAME = "db";
     private static final String DB_PATH = "jdbc:mysql://localhost:3306/";
     private static final String UNICODE = "?autoReconnect=true&amp;useEncoding=true&amp;characterEncoding=UTF-8";
     private static String url;
@@ -277,7 +277,7 @@ public class DB {
                 p.setProf_status(rs.getString("prof_status"));
 
                 InputStream inputStream = ((rs.getBlob("prof_img").getBinaryStream()));
-
+                p.setProf_image(inputStream);
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 byte[] buffer = new byte[4096];
                 int bytesRead = -1;

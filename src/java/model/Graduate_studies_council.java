@@ -109,4 +109,35 @@ public class Graduate_studies_council {
         this.base64_image = base64_image;
     }
 
+    public boolean update(Connection con) {
+
+        try {
+
+            String query = "update graduate_studies_council set gsc_prof_id = ? , "
+                    + "gsc_prof_state = ? , "
+                    + "gsc_addedBy = ? , "
+                    + "name = ? , "
+                    + "position = ? , "
+                    + "image = ? "
+                    + "  \n where gsc_id = ? ;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setInt(1, gsc_prof_id);
+            ps.setString(2, gsc_prof_state);
+            ps.setInt(3, gsc_addedBy);
+            ps.setString(4, name);
+            ps.setString(5, position);
+            ps.setBlob(6, image);
+            ps.setInt(7, gsc_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
 }

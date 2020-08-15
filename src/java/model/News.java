@@ -47,16 +47,16 @@ public class News {
 
     public boolean update(Connection con) {
         try {
-            String query = "UPDATE news \n"
-                    + "SET \n"
-                    + "    news_tittle = ? ,"
-                    + "    news_description = ? ,"
-                    + "    news_date = ? ,"
-                    + "    news_addedBy = ? ,"
-                    + "    img = ? ,"
-                    + "    homePage = ? "
-                    + "WHERE\n"
-                    + "    news_id = ?;";
+            String query = "update news set news_tittle = ? , "
+                    + "news_description = ? , "
+                    + "news_date = ? , "
+                    + "news_addedBy = ? , "
+                    + "img = ? , "
+                    + "homePage = ? "
+                    + "  \n where news_id = ? ;";
+
+            System.out.println(query);
+
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, news_tittle);
             ps.setString(2, news_description);
@@ -64,6 +64,7 @@ public class News {
             ps.setInt(4, news_addedBy);
             ps.setBlob(5, img);
             ps.setInt(6, homePage);
+
             ps.setInt(7, news_id);
 
             int isAdded = ps.executeUpdate();

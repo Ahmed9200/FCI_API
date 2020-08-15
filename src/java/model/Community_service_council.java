@@ -109,4 +109,36 @@ public class Community_service_council {
         this.base64_image = base64_image;
     }
 
+    public boolean update(Connection con) {
+
+        try {
+
+            String query = "update community_service_council set csc_prof_id = ? , "
+                    + "csc_prof_state = ? , "
+                    + "csc_addedBy = ? , "
+                    + "name = ? , "
+                    + "position = ? , "
+                    + "image = ? , "
+                    + "csc_id = ?  "
+                    + "  \n where ccs_id = ? ;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setInt(1, csc_prof_id);
+            ps.setString(2, csc_prof_state);
+            ps.setInt(3, csc_addedBy);
+            ps.setString(4, name);
+            ps.setString(5, position);
+            ps.setBlob(6, image);
+            ps.setInt(7, csc_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
 }

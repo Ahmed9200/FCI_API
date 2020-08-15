@@ -109,4 +109,37 @@ public class Collage_council {
         this.base64_img = base64_img;
     }
 
+    public boolean update(Connection con) {
+
+        try {
+
+            String query = "update collage_council set cc_prof_id = ? , "
+                    + "cc_prof_state = ? , "
+                    + "cc_addedBy = ? , "
+                    + "name = ? , "
+                    + "position = ? , "
+                    + "image = ?  "
+                    + "  \n where cc_id = ? ;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setInt(1, cc_prof_id);
+            ps.setString(2, cc_prof_state);
+            ps.setInt(3, cc_addedBy);
+            ps.setString(4, name);
+            ps.setString(5, position);
+            ps.setBlob(6, image);
+
+            ps.setInt(7, cc_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
 }

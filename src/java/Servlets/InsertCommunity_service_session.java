@@ -52,7 +52,20 @@ public class InsertCommunity_service_session extends HttpServlet {
 
         } catch (Exception e) {
         }
-        if (n.add(con)) {
+
+        boolean tst = false;
+
+        if (request.getParameter("op").equals("1")) {
+
+            tst = n.add(con);
+
+        } else if (request.getParameter("op").equals("2")) {
+            n.setCss_id(Integer.parseInt(request.getParameter("css_id")));
+            tst = n.update(con);
+
+        }
+
+        if (tst) {
             output += "{\"result\": [";
             output += "{";
             output += "\"text\":\"" + "success" + "\"";

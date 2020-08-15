@@ -109,4 +109,38 @@ public class Collage_council_session {
         this.ccs_description = ccs_description;
     }
 
+    public boolean update(Connection con) {
+
+        try {
+
+            String query = "update collage_council_session set ccs_name_arabic = ? , "
+                    + "ccs_name_english = ? , "
+                    + "ccs_about = ? , "
+                    + "ccs_school_year = ? , "
+                    + "ccs_addedBy = ? , "
+                    + "ccs_addedDate = ? , "
+                    + "ccs_description = ?  "
+                    + "  \n where ccs_id = ? ;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setString(1, ccs_name_arabic);
+            ps.setString(2, ccs_name_english);
+            ps.setString(3, ccs_about);
+            ps.setString(4, ccs_school_year);
+            ps.setInt(5, ccs_addedBy);
+            ps.setString(6, ccs_addedDate);
+            ps.setString(7, ccs_description);
+            ps.setInt(8, ccs_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
 }

@@ -179,4 +179,51 @@ public class Students {
         this.stud_password = stud_password;
     }
 
+    public boolean update(Connection con) {
+
+        try {
+
+            String query = "update students set stud_fname = ? , "
+                    + "stud_lname = ? , "
+                    + "stud_name_english = ? , "
+                    + "stud_age = ? , "
+                    + "stud_email = ? , "
+                    + "stud_religion = ? , "
+                    + "stud_nationality = ? , "
+                    + "stud_address1 = ? , "
+                    + "stud_address2 = ? , "
+                    + "stud_ssid = ? , "
+                    + "stud_collage_year = ? , "
+                    + "stud_dept_id = ? , "
+                    + "stud_username = ? , "
+                    + "stud_password = ? "
+                    + "  \n where stud_id = ? ;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setString(1, stud_fname);
+            ps.setString(2, stud_lname);
+            ps.setString(3, stud_name_english);
+            ps.setInt(4, stud_age);
+            ps.setString(5, stud_email);
+            ps.setString(6, stud_religion);
+            ps.setString(7, stud_nationality);
+            ps.setString(8, stud_address1);
+            ps.setString(9, stud_address2);
+            ps.setInt(10, stud_ssid);
+            ps.setInt(11, stud_collage_year);
+            ps.setInt(12, stud_dept_id);
+            ps.setString(13, stud_username);
+            ps.setString(14, stud_password);
+            ps.setInt(15, stud_id);
+
+            int isAdded = ps.executeUpdate();
+
+            return isAdded > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
 }
